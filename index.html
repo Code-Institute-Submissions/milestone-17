@@ -77,13 +77,13 @@
             // New Map
             var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-        //     // Quick New Marker---------------------------------------------
+            // Quick New Marker---------------------------------------------
 
-        //     function newMarker(props) {
-        //         var marker = new google.maps.Marker({
-        //             position: props.coordinates,
-        //             map: map,
-        //         });
+            function newMarker(props) {
+                var marker = new google.maps.Marker({
+                    position: props.coordinates,
+                    map: map,
+                });
 
         //         // Spot Name-----------------------------------------------
 
@@ -143,18 +143,18 @@
         //         }
 
 
-        //     }
+            }
             
         //     // Markers---------------------------------------------------
 
-        //     // Southbank
-        //     newMarker({ coordinates: { lat: 51.5068, lng: -0.1166 }, content: '<h3>Southbank</h3>', area: 'central', type: 'marker' });
-        //     // BaySixty6
-        //     newMarker({ coordinates: { lat: 51.520780, lng: -0.205026 }, content: '<h3>BaySixty6</h3>', area: 'west', type: 'marker' });
-        //     // London Bridge 10
-        //     newMarker({ coordinates: { lat: 51.506513, lng: -0.088138 }, content: '<h3>London Bridge 10</h3>', area: 'central', type: 'marker' });
-        //     // Kingston Skatepark
-        //     newMarker({ coordinates: { lat: 51.411380, lng: -0.313468 }, content: '<h3>Kingston Skatepark</h3>', area: 'west', type: 'marker' });
+            // Southbank
+            newMarker({ coordinates: { lat: 51.5068, lng: -0.1166 }, content: '<h3>Southbank</h3>', area: 'central', type: 'marker' });
+            // BaySixty6
+            newMarker({ coordinates: { lat: 51.520780, lng: -0.205026 }, content: '<h3>BaySixty6</h3>', area: 'west', type: 'marker' });
+            // London Bridge 10
+            newMarker({ coordinates: { lat: 51.506513, lng: -0.088138 }, content: '<h3>London Bridge 10</h3>', area: 'central', type: 'marker' });
+            // Kingston Skatepark
+            newMarker({ coordinates: { lat: 51.411380, lng: -0.313468 }, content: '<h3>Kingston Skatepark</h3>', area: 'west', type: 'marker' });
         //     // Murray Skatepark
         //     newMarker({ coordinates: { lat: 51.457279, lng: -0.355880 }, content: '<h3>Murray Skatepark</h3>', area: 'west', type: 'marker' });
         //     // Clapham Common Skatepark
