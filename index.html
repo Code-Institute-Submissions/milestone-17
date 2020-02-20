@@ -18,21 +18,30 @@
 
         <nav class="fixed-top container">
             <div class="row">
-                <div class="col-4">
-                    <a href="#about">ABOUT</a>
+                <div class="col-lg-2 col-md-4 col-6" id='north'>
+                    <a href="#rule">NORTH</a>
                 </div>
-                <div class="col-4">
-                    <a href="#portfolio">PORTFOLIO</a>
+                <div class="col-lg-2 col-md-4 col-6" id='east'>
+                    <a href="#rule">EAST</a>
                 </div>
-                <div class="col-4">
-                    <a href="#contact">CONTACT</a>
+                <div class="col-lg-2 col-md-4 col-6" id='south'>
+                    <a href="#rule">SOUTH</a>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6" id='west'>
+                    <a href="#rule">WEST</a>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6" id='central'>
+                    <a href="#rule">CENTRAL</a>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6" id='reset'>
+                    <a href="#rule">ALL</a>
                 </div>
             </div>
         </nav>
 
         <!--TITLE: I'm using ***Bootstrap-grids*** so I can keep this looking good on all screen sizes-->
 
-        <section id="landing" class="view">
+        <section id="title" class="view">
             <div class="mask rgba-black-strong">
                 <div class="container-fluid d-flex align-items-center justify-content-center h-100">
                     <div class="content row d-flex justify-content-center text-center">
@@ -43,44 +52,56 @@
                 </div>
             </div>
         </section>
-    </section>
+        <!--<div class='buttons'>-->
+        <!--    <button id='central'>Central</button>-->
+        <!--    <button id='north'>North</button>-->
+        <!--    <button id='east'>East</button>-->
+        <!--    <button id='south'>South</button>-->
+        <!--    <button id='west'>West</button>-->
+        <!--    <button id='reset'>Reset</button>-->
+        <!--</div>-->
 
-    <button id='central'>Central</button>
-    <button id='north'>North</button>
-    <button id='east'>East</button>
-    <button id='south'>South</button>
-    <button id='west'>West</button>
-    <button id='reset'>Reset</button>
-    <button id='infoclose'>info close</button>
+        <br id='rule'>
+        <br>
+    
+    
+    
+        <div id="map"></div>
+    
 
-
-    <br>
-    <br>
-
-    <div id="map"></div>
-
+    
+        <nav class="container">
+            <div class="row">
+                <div class="col-6" id='north'>
+                    <a href="#rule">Park</a>
+                </div>
+                <div class="col-6" id='east'>
+                    <a href="#rule">Street</a>
+                </div>
+            </div>
+        </nav>
+  </section>
     <!-------------------------------------------------------->
 
     <script>
         // google is undefined?
         var google = "";
-        // -------------------------
-
-
+        // Map Options ------------------------------------------------------
         function initMap() {
-
-            // Map Options
             var mapOptions = {
                 center: new google.maps.LatLng(51.508034, -0.126798),
-                zoom: 10,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+                zoom: 11,
+                // mapTypeId: google.maps.MapTypeId.ROADMAP
             }
             // New Map
+
             var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-            // Quick New Marker---------------------------------------------
+            // New Empty Info Window---------------------------------------------
 
-             var name = new google.maps.InfoWindow({});
+            var name = new google.maps.InfoWindow({});
+
+            // Quick New Marker---------------------------------------------
 
             function newMarker(props) {
                 var marker = new google.maps.Marker({
@@ -90,31 +111,21 @@
 
                 });
 
-                //         // Spot Name Info Window-----------------------------------------------
-               
-                
-                if (props.content) {
+                // Spot Name Set & Open Info Window ClickEvent-----------------------------------------------
 
+                if (props.content) {
                     marker.addListener('click', function() {
                         name.open(map, marker);
                         name.setContent(props.content);
                     });
-
                 }
-
-
-
-
-
-
-
-
-                //         // Buttons---------------------------------------------------
+                // Buttons---------------------------------------------------
 
 
                 document.getElementById("central").addEventListener("click", btnCentral);
 
                 function btnCentral() {
+                    marker.setMap(map);
                     if (props.area !== 'central') {
                         marker.setMap(null);
                     }
@@ -123,6 +134,7 @@
                 document.getElementById("north").addEventListener("click", btnNorth);
 
                 function btnNorth() {
+                    marker.setMap(map);
                     if (props.area !== 'north') {
                         marker.setMap(null);
                     }
@@ -131,6 +143,7 @@
                 document.getElementById("east").addEventListener("click", btnEast);
 
                 function btnEast() {
+                    marker.setMap(map);
                     if (props.area !== 'east') {
                         marker.setMap(null);
                     }
@@ -139,6 +152,7 @@
                 document.getElementById("south").addEventListener("click", btnSouth);
 
                 function btnSouth() {
+                    marker.setMap(map);
                     if (props.area !== 'south') {
                         marker.setMap(null);
                     }
@@ -147,8 +161,10 @@
                 document.getElementById("west").addEventListener("click", btnWest);
 
                 function btnWest() {
+                    marker.setMap(map);
                     if (props.area !== 'west') {
                         marker.setMap(null);
+
                     }
                 }
 
@@ -165,66 +181,62 @@
 
             //     // Markers---------------------------------------------------
 
-            // Southbank
-            newMarker({ coordinates: { lat: 51.5068, lng: -0.1166 }, content: '<h3>Southbank</h3>', area: 'central', type: 'marker' });
-            // BaySixty6
+            newMarker({ coordinates: { lat: 51.506852, lng: -0.116627 }, content: '<h3>Southbank</h3>', area: 'central', type: 'marker' });
             newMarker({ coordinates: { lat: 51.520780, lng: -0.205026 }, content: '<h3>BaySixty6</h3>', area: 'west', type: 'marker' });
-            // London Bridge 10
             newMarker({ coordinates: { lat: 51.506513, lng: -0.088138 }, content: '<h3>London Bridge 10</h3>', area: 'central', type: 'marker' });
-            // Kingston Skatepark
             newMarker({ coordinates: { lat: 51.411380, lng: -0.313468 }, content: '<h3>Kingston Skatepark</h3>', area: 'west', type: 'marker' });
-            // Murray Skatepark
             newMarker({ coordinates: { lat: 51.457279, lng: -0.355880 }, content: '<h3>Murray Skatepark</h3>', area: 'west', type: 'marker' });
-            // Clapham Common Skatepark
             newMarker({ coordinates: { lat: 51.460933, lng: -0.143693 }, content: '<h3>Clapham Common Skatepark</h3>', area: 'south', type: 'marker' });
-            // Peckham Rye Skatepark
             newMarker({ coordinates: { lat: 51.458066, lng: -0.056977 }, content: '<h3>Peckham Rye Skatepark</h3>', area: 'south', type: 'marker' });
-            // Ealing Skatepark
             newMarker({ coordinates: { lat: 51.529521, lng: -0.330011 }, content: '<h3>Ealing Skatepark</h3>', area: 'west', type: 'marker' });
-            // St Pauls Festival Gardens
             newMarker({ coordinates: { lat: 51.513242, lng: -0.097139 }, content: '<h3>St Pauls Festival Gardens</h3>', area: 'central', type: 'marker' });
-            // St Pauls 3 set
             newMarker({ coordinates: { lat: 51.512501, lng: -0.097593 }, content: '<h3>St Pauls 3 set</h3>', area: 'central', type: 'marker' });
-            // Knightrider Stairs
             newMarker({ coordinates: { lat: 51.512665, lng: -0.098294 }, content: '<h3>Knightrider Stairs</h3>', area: 'central', type: 'marker' });
-            // Victoria Park Skatepark
             newMarker({ coordinates: { lat: 51.538274, lng: -0.034833 }, content: '<h3>Victoria Park Skatepark</h3>', area: 'east', type: 'marker' });
-            // Cantelowes Skatepark
             newMarker({ coordinates: { lat: 51.546679, lng: -0.133186 }, content: '<h3>Cantelowes Skatepark</h3>', area: 'north', type: 'marker' });
-            // Whitegrounds Skatepark 
             newMarker({ coordinates: { lat: 51.502263, lng: -0.080481 }, content: '<h3>Whitegrounds Skatepark</h3>', area: 'central', type: 'marker' });
-            // Stockwell Skatepark
             newMarker({ coordinates: { lat: 51.466092, lng: -0.116342 }, content: '<h3>Stockwell Skatepark</h3>', area: 'south', type: 'marker' });
-            // Meanwhile Bowl
             newMarker({ coordinates: { lat: 51.522693, lng: -0.202882 }, content: '<h3>Meanwhile Bowl</h3>', area: 'west', type: 'marker' });
-            // Royal Oak Skatepark
             newMarker({ coordinates: { lat: 51.520021, lng: -0.191735 }, content: '<h3>Royal Oak Skatepark</h3>', area: 'west', type: 'marker' });
-            // Mile End Skatepark
             newMarker({ coordinates: { lat: 51.517470, lng: -0.031643 }, content: '<h3>Mile End Skatepark</h3>', area: 'east', type: 'marker' });
-            // Euston Bank
             newMarker({ coordinates: { lat: 51.527929, lng: -0.131549 }, content: '<h3>Euston Bank</h3>', area: 'central', type: 'marker' });
-            // Euston Brick Banks
             newMarker({ coordinates: { lat: 51.527299, lng: -0.132221 }, content: '<h3>Euston Brick Banks</h3>', area: 'central', type: 'marker' });
-            // Bloblands Skatepark
             newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 }, content: '<h3>Bloblands Skatepark</h3>', area: 'south', type: 'marker' });
-            // Kimber Skatepark
             newMarker({ coordinates: { lat: 51.455733, lng: -0.190459 }, content: '<h3>Kimber Skatepark</h3>', area: 'south', type: 'marker' });
-            // Clissold Park Skatepark
             newMarker({ coordinates: { lat: 51.562268, lng: -0.085033 }, content: '<h3>Clissold Park Skatepark</h3>', area: 'north', type: 'marker' });
-            // Finsbury Park Skatepark
             newMarker({ coordinates: { lat: 51.567501, lng: -0.104705 }, content: '<h3>Finsbury Park Skatepark</h3>', area: 'north', type: 'marker' });
 
-            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 },content: '<h3>London Bridge 10</h3>' });
+            newMarker({ coordinates: { lat: 51.510540, lng: -0.000417 }, content: '<h3>Zebra Ledge</h3>', area: 'east', type: 'marker' });
 
-            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 },content: '<h3>London Bridge 10</h3>' });
+            newMarker({ coordinates: { lat: 51.510503, lng: -0.003151 }, content: '<h3> East India Ledges</h3>', area: 'east', type: 'marker' });
 
-            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
+            newMarker({ coordinates: { lat: 51.508031, lng: -0.008035 }, content: '<h3>Black Wall Banks</h3>', area: 'east', type: 'marker' });
 
-            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
+            newMarker({ coordinates: { lat: 51.490129, lng: -0.022728 }, content: '<h3>Mudchute Skatepark</h3>', area: 'east', type: 'marker' });
 
-            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
+            newMarker({ coordinates: { lat: 51.452072, lng: -0.113728 }, content: '<h3>Brixton Pink Hubba</h3>', area: 'south', type: 'marker' });
 
-            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
+            newMarker({ coordinates: { lat: 51.485617, lng: -0.108536 }, content: '<h3>Kennington Bowl</h3>', area: 'south', type: 'marker' });
+
+            newMarker({ coordinates: { lat: 51.421163, lng: -0.071196 }, content: '<h3>118 Banks</h3>', area: 'south', type: 'marker' });
+
+            newMarker({ coordinates: { lat: 51.552764, lng: -0.036070 }, content: '<h3>Hackney Bumps</h3>', area: 'east', type: 'marker' });
+
+            newMarker({ coordinates: { lat: 51.552764, lng: -0.036070 }, content: '<h3>Hackney Playground</h3>', area: 'east', type: 'marker' });
+
+            newMarker({ coordinates: { lat: 51.538216, lng: -0.060315 }, content: '<h3>London Fields</h3>', area: 'east', type: 'marker' });
+
+            newMarker({ coordinates: { lat: 51.487672, lng: 0.025399 }, content: '<h3>Bank to Ledge</h3>', area: 'east', type: 'marker' });
+
+            newMarker({ coordinates: { lat: 51.517269, lng: -0.070746 }, content: '<h3>Brick Lane Manual Pad</h3>', area: 'east', type: 'marker' });
+
+            newMarker({ coordinates: { lat: 51.539387, lng: -0.439413 }, content: '<h3>Pole Hill Skatepark</h3>', area: 'west', type: 'marker' });
+
+            newMarker({ coordinates: { lat: 51.460609, lng: -0.428272 }, content: '<h3>Bedfont Skatepark</h3>', area: 'west', type: 'marker' });
+
+            newMarker({ coordinates: { lat: 51.471134, lng: -0.217669 }, content: '<h3>Bishops Park Bowl</h3>', area: 'west', type: 'marker' });
+
+            newMarker({ coordinates: { lat: 51.546225, lng: -0.270894 }, content: '<h3>Harrow Skatepark</h3>', area: 'west', type: 'marker' });
 
         };
     </script>
