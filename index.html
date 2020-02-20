@@ -63,24 +63,24 @@
 
         <br id='rule'>
         <br>
-    
-    
-    
-        <div id="map"></div>
-    
 
-    
+
+
+        <div id="map"></div>
+
+
+
         <nav class="container">
             <div class="row">
-                <div class="col-6" id='north'>
+                <div class="col-6" id='park'>
                     <a href="#rule">Park</a>
                 </div>
-                <div class="col-6" id='east'>
+                <div class="col-6" id='street'>
                     <a href="#rule">Street</a>
                 </div>
             </div>
         </nav>
-  </section>
+    </section>
     <!-------------------------------------------------------->
 
     <script>
@@ -171,8 +171,27 @@
                 document.getElementById("reset").addEventListener("click", btnReset);
 
                 function btnReset() {
-                    if (props.type === 'marker') {
+                    // if (props.type === 'street') {
                         marker.setMap(map);
+                    // }
+                }
+
+                document.getElementById("park").addEventListener("click", btnPark);
+
+                function btnPark() {
+                    marker.setMap(map);
+                    if (props.type !== 'park') {
+                        marker.setMap(null);
+                    }
+                }
+
+                document.getElementById("street").addEventListener("click", btnStreet);
+
+                function btnStreet() {
+                    marker.setMap(map);
+
+                    if (props.type !== 'street') {
+                        marker.setMap(null);
                     }
                 }
 
@@ -181,62 +200,46 @@
 
             //     // Markers---------------------------------------------------
 
-            newMarker({ coordinates: { lat: 51.506852, lng: -0.116627 }, content: '<h3>Southbank</h3>', area: 'central', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.520780, lng: -0.205026 }, content: '<h3>BaySixty6</h3>', area: 'west', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.506513, lng: -0.088138 }, content: '<h3>London Bridge 10</h3>', area: 'central', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.411380, lng: -0.313468 }, content: '<h3>Kingston Skatepark</h3>', area: 'west', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.457279, lng: -0.355880 }, content: '<h3>Murray Skatepark</h3>', area: 'west', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.460933, lng: -0.143693 }, content: '<h3>Clapham Common Skatepark</h3>', area: 'south', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.458066, lng: -0.056977 }, content: '<h3>Peckham Rye Skatepark</h3>', area: 'south', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.529521, lng: -0.330011 }, content: '<h3>Ealing Skatepark</h3>', area: 'west', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.513242, lng: -0.097139 }, content: '<h3>St Pauls Festival Gardens</h3>', area: 'central', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.512501, lng: -0.097593 }, content: '<h3>St Pauls 3 set</h3>', area: 'central', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.512665, lng: -0.098294 }, content: '<h3>Knightrider Stairs</h3>', area: 'central', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.538274, lng: -0.034833 }, content: '<h3>Victoria Park Skatepark</h3>', area: 'east', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.546679, lng: -0.133186 }, content: '<h3>Cantelowes Skatepark</h3>', area: 'north', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.502263, lng: -0.080481 }, content: '<h3>Whitegrounds Skatepark</h3>', area: 'central', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.466092, lng: -0.116342 }, content: '<h3>Stockwell Skatepark</h3>', area: 'south', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.522693, lng: -0.202882 }, content: '<h3>Meanwhile Bowl</h3>', area: 'west', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.520021, lng: -0.191735 }, content: '<h3>Royal Oak Skatepark</h3>', area: 'west', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.517470, lng: -0.031643 }, content: '<h3>Mile End Skatepark</h3>', area: 'east', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.527929, lng: -0.131549 }, content: '<h3>Euston Bank</h3>', area: 'central', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.527299, lng: -0.132221 }, content: '<h3>Euston Brick Banks</h3>', area: 'central', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 }, content: '<h3>Bloblands Skatepark</h3>', area: 'south', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.455733, lng: -0.190459 }, content: '<h3>Kimber Skatepark</h3>', area: 'south', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.562268, lng: -0.085033 }, content: '<h3>Clissold Park Skatepark</h3>', area: 'north', type: 'marker' });
-            newMarker({ coordinates: { lat: 51.567501, lng: -0.104705 }, content: '<h3>Finsbury Park Skatepark</h3>', area: 'north', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.510540, lng: -0.000417 }, content: '<h3>Zebra Ledge</h3>', area: 'east', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.510503, lng: -0.003151 }, content: '<h3> East India Ledges</h3>', area: 'east', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.508031, lng: -0.008035 }, content: '<h3>Black Wall Banks</h3>', area: 'east', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.490129, lng: -0.022728 }, content: '<h3>Mudchute Skatepark</h3>', area: 'east', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.452072, lng: -0.113728 }, content: '<h3>Brixton Pink Hubba</h3>', area: 'south', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.485617, lng: -0.108536 }, content: '<h3>Kennington Bowl</h3>', area: 'south', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.421163, lng: -0.071196 }, content: '<h3>118 Banks</h3>', area: 'south', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.552764, lng: -0.036070 }, content: '<h3>Hackney Bumps</h3>', area: 'east', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.552764, lng: -0.036070 }, content: '<h3>Hackney Playground</h3>', area: 'east', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.538216, lng: -0.060315 }, content: '<h3>London Fields</h3>', area: 'east', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.487672, lng: 0.025399 }, content: '<h3>Bank to Ledge</h3>', area: 'east', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.517269, lng: -0.070746 }, content: '<h3>Brick Lane Manual Pad</h3>', area: 'east', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.539387, lng: -0.439413 }, content: '<h3>Pole Hill Skatepark</h3>', area: 'west', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.460609, lng: -0.428272 }, content: '<h3>Bedfont Skatepark</h3>', area: 'west', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.471134, lng: -0.217669 }, content: '<h3>Bishops Park Bowl</h3>', area: 'west', type: 'marker' });
-
-            newMarker({ coordinates: { lat: 51.546225, lng: -0.270894 }, content: '<h3>Harrow Skatepark</h3>', area: 'west', type: 'marker' });
+            newMarker({ coordinates: { lat: 51.506852, lng: -0.116627 }, content: '<h3>Southbank</h3>', area: 'central', type: 'street' });
+            newMarker({ coordinates: { lat: 51.520780, lng: -0.205026 }, content: '<h3>BaySixty6</h3>', area: 'west', type: 'park' });
+            newMarker({ coordinates: { lat: 51.506513, lng: -0.088138 }, content: '<h3>London Bridge 10</h3>', area: 'central', type: 'street' });
+            newMarker({ coordinates: { lat: 51.411380, lng: -0.313468 }, content: '<h3>Kingston Skatepark</h3>', area: 'west', type: 'park' });
+            newMarker({ coordinates: { lat: 51.457279, lng: -0.355880 }, content: '<h3>Murray Skatepark</h3>', area: 'west', type: 'park' });
+            newMarker({ coordinates: { lat: 51.460933, lng: -0.143693 }, content: '<h3>Clapham Common Skatepark</h3>', area: 'south', type: 'park' });
+            newMarker({ coordinates: { lat: 51.458066, lng: -0.056977 }, content: '<h3>Peckham Rye Skatepark</h3>', area: 'south', type: 'park' });
+            newMarker({ coordinates: { lat: 51.529521, lng: -0.330011 }, content: '<h3>Ealing Skatepark</h3>', area: 'west', type: 'park' });
+            newMarker({ coordinates: { lat: 51.513242, lng: -0.097139 }, content: '<h3>St Pauls Festival Gardens</h3>', area: 'central', type: 'street' });
+            newMarker({ coordinates: { lat: 51.512501, lng: -0.097593 }, content: '<h3>St Pauls 3 set</h3>', area: 'central', type: 'street' });
+            newMarker({ coordinates: { lat: 51.512665, lng: -0.098294 }, content: '<h3>Knightrider Stairs</h3>', area: 'central', type: 'street' });
+            newMarker({ coordinates: { lat: 51.538274, lng: -0.034833 }, content: '<h3>Victoria Park Skatepark</h3>', area: 'east', type: 'park' });
+            newMarker({ coordinates: { lat: 51.546679, lng: -0.133186 }, content: '<h3>Cantelowes Skatepark</h3>', area: 'north', type: 'park' });
+            newMarker({ coordinates: { lat: 51.502263, lng: -0.080481 }, content: '<h3>Whitegrounds Skatepark</h3>', area: 'central', type: 'park' });
+            newMarker({ coordinates: { lat: 51.466092, lng: -0.116342 }, content: '<h3>Stockwell Skatepark</h3>', area: 'south', type: 'park' });
+            newMarker({ coordinates: { lat: 51.522693, lng: -0.202882 }, content: '<h3>Meanwhile Bowl</h3>', area: 'west', type: 'park' });
+            newMarker({ coordinates: { lat: 51.520021, lng: -0.191735 }, content: '<h3>Royal Oak Skatepark</h3>', area: 'west', type: 'park' });
+            newMarker({ coordinates: { lat: 51.517470, lng: -0.031643 }, content: '<h3>Mile End Skatepark</h3>', area: 'east', type: 'park' });
+            newMarker({ coordinates: { lat: 51.527929, lng: -0.131549 }, content: '<h3>Euston Bank</h3>', area: 'central', type: 'street' });
+            newMarker({ coordinates: { lat: 51.527299, lng: -0.132221 }, content: '<h3>Euston Brick Banks</h3>', area: 'central', type: 'street' });
+            newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 }, content: '<h3>Bloblands Skatepark</h3>', area: 'south', type: 'park' });
+            newMarker({ coordinates: { lat: 51.455733, lng: -0.190459 }, content: '<h3>Kimber Skatepark</h3>', area: 'south', type: 'park' });
+            newMarker({ coordinates: { lat: 51.562268, lng: -0.085033 }, content: '<h3>Clissold Park Skatepark</h3>', area: 'north', type: 'park' });
+            newMarker({ coordinates: { lat: 51.567501, lng: -0.104705 }, content: '<h3>Finsbury Park Skatepark</h3>', area: 'north', type: 'park' });
+            newMarker({ coordinates: { lat: 51.510540, lng: -0.000417 }, content: '<h3>Zebra Ledge</h3>', area: 'east', type: 'street' });
+            newMarker({ coordinates: { lat: 51.510503, lng: -0.003151 }, content: '<h3> East India Ledges</h3>', area: 'east', type: 'street' });
+            newMarker({ coordinates: { lat: 51.508031, lng: -0.008035 }, content: '<h3>Black Wall Banks</h3>', area: 'east', type: 'street' });
+            newMarker({ coordinates: { lat: 51.490129, lng: -0.022728 }, content: '<h3>Mudchute Skatepark</h3>', area: 'east', type: 'park' });
+            newMarker({ coordinates: { lat: 51.452072, lng: -0.113728 }, content: '<h3>Brixton Pink Hubba</h3>', area: 'south', type: 'street' });
+            newMarker({ coordinates: { lat: 51.485617, lng: -0.108536 }, content: '<h3>Kennington Bowl</h3>', area: 'south', type: 'park' });
+            newMarker({ coordinates: { lat: 51.421163, lng: -0.071196 }, content: '<h3>118 Banks</h3>', area: 'south', type: 'street' });
+            newMarker({ coordinates: { lat: 51.552764, lng: -0.036070 }, content: '<h3>Hackney Bumps</h3>', area: 'east', type: 'park' });
+            newMarker({ coordinates: { lat: 51.552764, lng: -0.036070 }, content: '<h3>Hackney Playground</h3>', area: 'east', type: 'street' });
+            newMarker({ coordinates: { lat: 51.538216, lng: -0.060315 }, content: '<h3>London Fields</h3>', area: 'east', type: 'street' });
+            newMarker({ coordinates: { lat: 51.487672, lng: 0.025399 }, content: '<h3>Bank to Ledge</h3>', area: 'east', type: 'street' });
+            newMarker({ coordinates: { lat: 51.517269, lng: -0.070746 }, content: '<h3>Brick Lane Manual Pad</h3>', area: 'east', type: 'street' });
+            newMarker({ coordinates: { lat: 51.539387, lng: -0.439413 }, content: '<h3>Pole Hill Skatepark</h3>', area: 'west', type: 'park' });
+            newMarker({ coordinates: { lat: 51.460609, lng: -0.428272 }, content: '<h3>Bedfont Skatepark</h3>', area: 'west', type: 'park' });
+            newMarker({ coordinates: { lat: 51.471134, lng: -0.217669 }, content: '<h3>Bishops Park Bowl</h3>', area: 'west', type: 'park' });
+            newMarker({ coordinates: { lat: 51.546225, lng: -0.270894 }, content: '<h3>Harrow Skatepark</h3>', area: 'west', type: 'park' });
 
         };
     </script>
