@@ -87,15 +87,15 @@
 
         //         // Spot Name-----------------------------------------------
 
-        //         if (props.content) {
-        //             var name = new google.maps.InfoWindow({
-        //                 content: props.content
-        //             });
+                if (props.content) {
+                    var name = new google.maps.InfoWindow({
+                        content: props.content
+                    });
 
-        //             marker.addListener('click', function() {
-        //                 name.open(map, marker);
-        //             });
-        //         }
+                    marker.addListener('click', function() {
+                        name.open(map, marker);
+                    });
+                }
 
         //         // Buttons---------------------------------------------------
 
@@ -155,18 +155,18 @@
             newMarker({ coordinates: { lat: 51.506513, lng: -0.088138 }, content: '<h3>London Bridge 10</h3>', area: 'central', type: 'marker' });
             // Kingston Skatepark
             newMarker({ coordinates: { lat: 51.411380, lng: -0.313468 }, content: '<h3>Kingston Skatepark</h3>', area: 'west', type: 'marker' });
-        //     // Murray Skatepark
-        //     newMarker({ coordinates: { lat: 51.457279, lng: -0.355880 }, content: '<h3>Murray Skatepark</h3>', area: 'west', type: 'marker' });
-        //     // Clapham Common Skatepark
-        //     newMarker({ coordinates: { lat: 51.460933, lng: -0.143693 }, content: '<h3>Clapham Common Skatepark</h3>', area: 'south', type: 'marker' });
-        //     // Peckham Rye Skatepark
-        //     newMarker({ coordinates: { lat: 51.458066, lng: -0.056977 }, content: '<h3>Peckham Rye Skatepark</h3>', area: 'south', type: 'marker' });
-        //     // Ealing Skatepark
-        //     newMarker({ coordinates: { lat: 51.529521, lng: -0.330011 }, content: '<h3>Ealing Skatepark</h3>', area: 'west', type: 'marker' });
-        //     // St Pauls Festival Gardens
-        //     newMarker({ coordinates: { lat: 51.513242, lng: -0.097139 }, content: '<h3>St Pauls Festival Gardens</h3>', area: 'central', type: 'marker' });
-        //     // St Pauls 3 set
-        //     newMarker({ coordinates: { lat: 51.512501, lng: -0.097593 }, content: '<h3>St Pauls 3 set</h3>', area: 'central', type: 'marker' });
+            // Murray Skatepark
+            newMarker({ coordinates: { lat: 51.457279, lng: -0.355880 }, content: '<h3>Murray Skatepark</h3>', area: 'west', type: 'marker' });
+            // Clapham Common Skatepark
+            newMarker({ coordinates: { lat: 51.460933, lng: -0.143693 }, content: '<h3>Clapham Common Skatepark</h3>', area: 'south', type: 'marker' });
+            // Peckham Rye Skatepark
+            newMarker({ coordinates: { lat: 51.458066, lng: -0.056977 }, content: '<h3>Peckham Rye Skatepark</h3>', area: 'south', type: 'marker' });
+            // Ealing Skatepark
+            newMarker({ coordinates: { lat: 51.529521, lng: -0.330011 }, content: '<h3>Ealing Skatepark</h3>', area: 'west', type: 'marker' });
+            // St Pauls Festival Gardens
+            newMarker({ coordinates: { lat: 51.513242, lng: -0.097139 }, content: '<h3>St Pauls Festival Gardens</h3>', area: 'central', type: 'marker' });
+            // St Pauls 3 set
+            newMarker({ coordinates: { lat: 51.512501, lng: -0.097593 }, content: '<h3>St Pauls 3 set</h3>', area: 'central', type: 'marker' });
         //     // Knightrider Stairs
         //     newMarker({ coordinates: { lat: 51.512665, lng: -0.098294 }, content: '<h3>Knightrider Stairs</h3>', area: 'central', type: 'marker' });
         //     // Victoria Park Skatepark
