@@ -51,6 +51,7 @@
     <button id='south'>South</button>
     <button id='west'>West</button>
     <button id='reset'>Reset</button>
+    <button id='infoclose'>info close</button>
 
 
     <br>
@@ -79,28 +80,40 @@
 
             // Quick New Marker---------------------------------------------
 
+             var name = new google.maps.InfoWindow({});
+
             function newMarker(props) {
                 var marker = new google.maps.Marker({
                     position: props.coordinates,
                     map: map,
+
+
                 });
 
-        //         // Spot Name-----------------------------------------------
-
+                //         // Spot Name Info Window-----------------------------------------------
+               
+                
                 if (props.content) {
-                    var name = new google.maps.InfoWindow({
-                        content: props.content
-                    });
 
                     marker.addListener('click', function() {
                         name.open(map, marker);
+                        name.setContent(props.content);
                     });
+
                 }
 
-        //         // Buttons---------------------------------------------------
+
+
+
+
+
+
+
+                //         // Buttons---------------------------------------------------
 
 
                 document.getElementById("central").addEventListener("click", btnCentral);
+
                 function btnCentral() {
                     if (props.area !== 'central') {
                         marker.setMap(null);
@@ -108,34 +121,39 @@
                 }
 
                 document.getElementById("north").addEventListener("click", btnNorth);
+
                 function btnNorth() {
                     if (props.area !== 'north') {
                         marker.setMap(null);
                     }
                 }
-                
+
                 document.getElementById("east").addEventListener("click", btnEast);
+
                 function btnEast() {
                     if (props.area !== 'east') {
                         marker.setMap(null);
                     }
                 }
-                
+
                 document.getElementById("south").addEventListener("click", btnSouth);
+
                 function btnSouth() {
                     if (props.area !== 'south') {
                         marker.setMap(null);
                     }
                 }
-                
+
                 document.getElementById("west").addEventListener("click", btnWest);
+
                 function btnWest() {
                     if (props.area !== 'west') {
                         marker.setMap(null);
                     }
                 }
-                
+
                 document.getElementById("reset").addEventListener("click", btnReset);
+
                 function btnReset() {
                     if (props.type === 'marker') {
                         marker.setMap(map);
@@ -144,8 +162,8 @@
 
 
             }
-            
-        //     // Markers---------------------------------------------------
+
+            //     // Markers---------------------------------------------------
 
             // Southbank
             newMarker({ coordinates: { lat: 51.5068, lng: -0.1166 }, content: '<h3>Southbank</h3>', area: 'central', type: 'marker' });
@@ -196,17 +214,17 @@
             // Finsbury Park Skatepark
             newMarker({ coordinates: { lat: 51.567501, lng: -0.104705 }, content: '<h3>Finsbury Park Skatepark</h3>', area: 'north', type: 'marker' });
 
-        //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 },content: '<h3>London Bridge 10</h3>' });
+            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 },content: '<h3>London Bridge 10</h3>' });
 
-        //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 },content: '<h3>London Bridge 10</h3>' });
+            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 },content: '<h3>London Bridge 10</h3>' });
 
-        //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
+            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
 
-        //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
+            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
 
-        //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
+            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
 
-        //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
+            //     // newMarker({ coordinates: { lat: 51.425754, lng: -0.093675 });
 
         };
     </script>
