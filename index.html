@@ -5,9 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css" />
+
+    <!--Load Jasmine framework-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.5.0/jasmine.js" integrity="sha256-PePX8Jc4TIxzzVz0Qe4NsH3OUU8+Y49DBWvYgggNqkY=" crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.5.0/jasmine-html.js" integrity="sha256-qazAASTTgUrq9SOYkPSB3oEuqbhn+2j4kxGkVZ0GKjY=" crossorigin="anonymous"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.5.0/boot.js" integrity="sha256-HG8TKl0T65NyELmbUoo0H7/a1e++smYdXXtuuEsyKok=" crossorigin="anonymous"></script>-->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.5.0/jasmine.css" integrity="sha256-YzqdEMEXu1sH1t2Y9tk3XhKhxy1xMWvcA1koZx43k+8=" crossorigin="anonymous" />-->
+    <!-- Load scripts -->
+    <!--<script type="text/javascript" src="scripts/calc.js"></script>-->
+
+    <!-- Load Tests -->
+    <!--<script type="text/javascript" src="spec/calcSpec.js"></script>-->
+
     <title>Milestone</title>
 </head>
 
@@ -25,10 +37,11 @@
             <div class="mask rgba-black-strong">
                 <div class="container-fluid d-flex align-items-center justify-content-center h-100">
                     <div class="content row d-flex justify-content-center text-center">
-                        <img src="assets/images/skateboard.jpg"></img>
-
+                        <!--<div >-->
+                        <img class='img' src="assets/images/skateboard.png" alt='skateboard'></img>
+                        <!--</div>-->
                         <div class="col-md-10 shift">
-                            <h2 class="font-weight-bold pt-3 mb-2">London Skate Spot Finder</h2>
+                            <h2 class="font-weight-bold pt-3 mb-2">London Skate-Spot Finder</h2>
                         </div>
                     </div>
                 </div>
@@ -38,31 +51,31 @@
         <nav id='nav' class="container">
             <div class="row">
                 <div class="col-lg-2 col-md-4 col-4" id='north'>
-                    <a href="#rule">NORTH</a>
+                    <a href="#nav">NORTH</a>
                 </div>
                 <div class="col-lg-2 col-md-4 col-4" id='east'>
-                    <a href="#rule">EAST</a>
+                    <a href="#nav">EAST</a>
                 </div>
                 <div class="col-lg-2 col-md-4 col-4" id='south'>
-                    <a href="#rule">SOUTH</a>
+                    <a href="#nav">SOUTH</a>
                 </div>
                 <div class="col-lg-2 col-md-4 col-4" id='west'>
-                    <a href="#rule">WEST</a>
+                    <a href="#nav">WEST</a>
                 </div>
                 <div class="col-lg-2 col-md-4 col-4" id='central'>
-                    <a href="#rule">CENTRAL</a>
+                    <a href="#nav">CENTRAL</a>
                 </div>
                 <div class="col-lg-2 col-md-4 col-4" id='reset'>
-                    <a href="#rule">ALL</a>
+                    <a href="#nav">ALL</a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-4" id='park'>
-                    <a href="#rule">PARK</a>
+                    <a href="#nav">PARK</a>
                 </div>
-                <div class="col-lg-4 col-md-4 col-4" id='weather'>
-                    <a href="#rule"></a>
+                <div class="col-lg-4 col-md-4 col-4">
+                    <a href="#nav"></a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-4" id='street'>
-                    <a href="#rule">STREET</a>
+                    <a href="#nav">STREET</a>
                 </div>
             </div>
         </nav>
@@ -95,153 +108,169 @@
     <!-------------------------------------------------------->
 
     <script>
-        var google = "";
-        // Map Options ------------------------------------------------------
-        function initMap() {
-            var mapOptions = {
+        /* global google */
+        
+        // global variable definitions
+        var mapOptions;
+        var map;
+        var infoWindow;
+        var mapMarkers = [];
+
+        function initMap() { // called by Google map and runs on startup
+            // define map
+            defineMap();
+
+            // get marker Data
+            var markerData = defineMarkerData();
+
+            // add markers
+            addMarkers(markerData);
+
+            // add button event handlers
+            addEventHandlers();
+
+            // add text / submit event handlers
+            addTextEventHandlers();
+        }
+
+
+
+        function defineMap() {
+            mapOptions = {
                 center: new google.maps.LatLng(51.508034, -0.126798),
-                zoom: 11,
-                // mapTypeId: google.maps.MapTypeId.ROADMAP
+                zoom: 11
             }
+
             // New Map
-
-            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-            // Weather---------------------------------------------
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
             // New Empty Info Window So only one window can open at a time---------------------------------------------
+            infoWindow = new google.maps.InfoWindow({});
+        }
 
-            var name = new google.maps.InfoWindow({});
 
-            // New Marker---------------------------------------------
+        function addMarkers(markerData) {
+            // Loop through marker objects and create markers----------------------------
+            for (var i = 0; i < markerData.length; i++) {
+                var newMarker = createMarker(markerData[i]);
+                mapMarkers.push(newMarker);
+            }
+        }
 
-            function newMarker(props) {
-                var marker = new google.maps.Marker({
-                    position: props.coordinates,
-                    map: map,
+
+        // Create Marker---------------------------------------------
+        function createMarker(markerData) {
+            var marker = new google.maps.Marker({
+                map: map,
+                position: markerData.coordinates,
+                area: markerData.area,
+                type: markerData.type,
+                names: markerData.names
+            });
+
+            // Spot Name Set & Open Info Window ClickEvent-----------------------------------------------
+
+            if (markerData.content) {
+                marker.addListener('click', function() {
+                    infoWindow.open(map, marker);
+                    infoWindow.setContent(markerData.content);
                 });
-
-                // Spot Name Set & Open Info Window ClickEvent-----------------------------------------------
-
-                if (props.content) {
-                    marker.addListener('click', function() {
-                        name.open(map, marker);
-                        name.setContent(props.content);
-                    });
-                }
-                // Buttons---------------------------------------------------
-
-
-                document.getElementById("central").addEventListener("click", btnCentral);
-
-                function btnCentral() {
-                    marker.setMap(map);
-                    if (props.area !== 'central') {
-                        marker.setMap(null);
-                    }
-                }
-
-                document.getElementById("north").addEventListener("click", btnNorth);
-
-                function btnNorth() {
-                    marker.setMap(map);
-                    if (props.area !== 'north') {
-                        marker.setMap(null);
-                    }
-                }
-
-                document.getElementById("east").addEventListener("click", btnEast);
-
-                function btnEast() {
-                    marker.setMap(map);
-                    if (props.area !== 'east') {
-                        marker.setMap(null);
-                    }
-                }
-
-                document.getElementById("south").addEventListener("click", btnSouth);
-
-                function btnSouth() {
-                    marker.setMap(map);
-                    if (props.area !== 'south') {
-                        marker.setMap(null);
-                    }
-                }
-
-                document.getElementById("west").addEventListener("click", btnWest);
-
-                function btnWest() {
-                    marker.setMap(map);
-                    if (props.area !== 'west') {
-                        marker.setMap(null);
-
-                    }
-                }
-
-                document.getElementById("reset").addEventListener("click", btnReset);
-
-                function btnReset() {
-                    marker.setMap(map);
-                }
-
-                document.getElementById("park").addEventListener("click", btnPark);
-
-                function btnPark() {
-                    marker.setMap(map);
-                    if (props.type !== 'park') {
-                        marker.setMap(null);
-                    }
-                }
-
-                document.getElementById("street").addEventListener("click", btnStreet);
-
-                function btnStreet() {
-                    marker.setMap(map);
-
-                    if (props.type !== 'street') {
-                        marker.setMap(null);
-                    }
-                }
-
-
-                // Submit---------------------------------------------------
-
-                document.getElementById("submit").addEventListener("click", formFunction);
-                document.getElementById("spot").addEventListener("onkeypress", formFunction);
-
-                document.getElementById("spot").addEventListener('keyup', function(k) {
-                    if (k.keyCode === 13) {
-                        formFunction();
-                    }
-                });
-
-                function formFunction() {
-                    marker.setMap(map);
-                    var spot = document.getElementById("spot");
-                    if (spot.value.toLowerCase() == "") {
-                        console.log("empty");
-                    }
-                    else if (spot.value.toLowerCase() !== props.name) {
-                        marker.setMap(null);
-                        console.log(spot.value);
-                    }
-                };
-
-
-                document.getElementById("resetForm").addEventListener("click", btnReset);
-
-
-
-
             }
 
-            // Markers-----------------------------------------------------------------------------------
+            return marker;
+        }
 
-            var markers = [{
+
+        function addEventHandlers() {
+            // Buttons---------------------------------------------------
+            document.getElementById("central").addEventListener("click", function() { selectByArea('central') });
+            document.getElementById("north").addEventListener("click", function() { selectByArea('north') });
+            document.getElementById("east").addEventListener("click", function() { selectByArea('east') });
+            document.getElementById("south").addEventListener("click", function() { selectByArea('south') });
+            document.getElementById("west").addEventListener("click", function() { selectByArea('west') });
+            document.getElementById("reset").addEventListener("click", function() { selectAllMarkers() });
+            document.getElementById("park").addEventListener("click", function() { selectByType('park') });
+            document.getElementById("street").addEventListener("click", function() { selectByType('street') });
+        }
+
+        function selectAllMarkers() {
+            for (var i = 0; i < mapMarkers.length; i++) {
+                var marker = mapMarkers[i];
+                marker.setMap(map);
+            }
+        }
+
+        function selectByArea(areaName) {
+            for (var i = 0; i < mapMarkers.length; i++) {
+                var marker = mapMarkers[i];
+                if (marker.area === areaName) {
+                    marker.setMap(map);
+                }
+                else {
+                    marker.setMap(null);
+                }
+            }
+        }
+
+        function selectByType(areaType) {
+            for (var i = 0; i < mapMarkers.length; i++) {
+                var marker = mapMarkers[i];
+                if (marker.type === areaType) {
+                    marker.setMap(map);
+                }
+                else {
+                    marker.setMap(null);
+                }
+            }
+        }
+
+        function addTextEventHandlers() {
+            document.getElementById("submit").addEventListener("click", onSubmit);
+
+            document.getElementById("spot").addEventListener('keyup', function(k) {
+                if (k.keyCode === 13) {
+                    onSubmit();
+                }
+            });
+
+            document.getElementById("resetForm").addEventListener("click", selectAllMarkers);
+        }
+
+
+        function onSubmit() {
+
+            var spotName = document.getElementById("spot").value;
+
+            if (!spotName) {
+                selectAllMarkers();
+            }
+            else {
+                spotName = spotName.toLowerCase().trim();
+                var isSpotFound = false;
+
+                for (var i = 0; i < mapMarkers.length; i++) {
+                    var marker = mapMarkers[i];
+                    if (marker.names && marker.names.find(function(name) { return name === spotName; })) {
+                        marker.setMap(map);
+                        isSpotFound = true;
+                    }
+                    else {
+                        marker.setMap(null);
+                    }
+                }
+
+                if (!isSpotFound) {
+                    selectAllMarkers();
+                }
+            };
+        }
+
+        function defineMarkerData() {
+
+            return [{
                     coordinates: { lat: 51.506852, lng: -0.116627 },
                     content: '<h3>Southbank</h3>',
-                    marker: 'true',
-                    name: 'southbank',
+                    names: ['southbank'],
                     area: 'central',
                     type: 'street'
 
@@ -249,16 +278,14 @@
                 {
                     coordinates: { lat: 51.520780, lng: -0.205026 },
                     content: '<h3>BaySixty6</h3>',
-                    marker: 'true',
-                    name: 'baysixty6',
+                    names: ['baysixty6', 'bay 66', 'bay', 'bay66'],
                     area: 'west',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.506513, lng: -0.088138 },
                     content: '<h3>London Bridge 10</h3>',
-                    marker: 'true',
-                    name: 'london bridge 10',
+                    names: ['london bridge 10', 'central'],
                     area: 'central',
                     type: 'street'
 
@@ -266,8 +293,7 @@
                 {
                     coordinates: { lat: 51.411380, lng: -0.313468 },
                     content: '<h3>Kingston Skatepark</h3>',
-                    marker: 'true',
-                    name: 'kingston skatepark',
+                    names: ['kingston', 'kingston skatepark'],
                     area: 'west',
                     type: 'park'
 
@@ -275,8 +301,7 @@
                 {
                     coordinates: { lat: 51.457279, lng: -0.355880 },
                     content: '<h3>Murray Skatepark</h3>',
-                    marker: 'true',
-                    name: 'murray skatepark',
+                    names: ['murray', 'murray skatepark'],
                     area: 'west',
                     type: 'park'
 
@@ -284,119 +309,119 @@
                 {
                     coordinates: { lat: 51.460933, lng: -0.143693 },
                     content: '<h3>Clapham Common Skatepark</h3>',
-                    name: 'clapham common skatepark',
+                    names: ['clapham common skatepark', 'clapham common'],
                     area: 'south',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.458066, lng: -0.056977 },
                     content: '<h3>Peckham Rye Skatepark</h3>',
-                    name: 'peckham rye skatepark',
+                    names: ['peckham rye skatepark', 'peckham rye'],
                     area: 'south',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.529521, lng: -0.330011 },
                     content: '<h3>Ealing Skatepark</h3>',
-                    name: 'ealing skatepark',
+                    names: ['ealing skatepark', 'ealing'],
                     area: 'west',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.513242, lng: -0.097139 },
                     content: "<h3>St Pauls Festival Gardens</h3>",
-                    name: 'st pauls festival gardens',
+                    names: ['st pauls festival gardens', 'st pauls'],
                     area: 'central',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.512501, lng: -0.097593 },
                     content: '<h3>St Pauls 3 Set</h3>',
-                    name: 'st pauls 3 set',
+                    names: ['st pauls 3 set', 'st pauls'],
                     area: 'central',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.512665, lng: -0.098294 },
                     content: '<h3>Knightrider Stairs</h3>',
-                    name: 'knightrider stairs',
+                    names: ['knightrider stairs', 'knightrider'],
                     area: 'central',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.538274, lng: -0.034833 },
                     content: '<h3>Victoria Park Skatepark</h3>',
-                    name: 'victoria park skatepark',
+                    names: ['victoria park skatepark', 'victoria park'],
                     area: 'east',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.546679, lng: -0.133186 },
                     content: '<h3>Cantelowes Skatepark</h3>',
-                    name: 'cantelowes skatepark',
+                    names: ['cantelowes skatepark', 'cantelowes'],
                     area: 'north',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.502263, lng: -0.080481 },
                     content: '<h3>Whitegrounds Skatepark</h3>',
-                    name: 'whitegrounds skatepark',
+                    names: ['whitegrounds skatepark', 'whitegrounds'],
                     area: 'central',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.466092, lng: -0.116342 },
                     content: '<h3>Stockwell Skatepark</h3>',
-                    name: 'stockwell skatepark',
+                    names: ['stockwell skatepark', 'stockwell'],
                     area: 'south',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.522693, lng: -0.202882 },
                     content: '<h3>Meanwhile Bowl</h3>',
-                    name: 'meanwhile bowl',
+                    names: ['meanwhile bowl', 'meanwhile'],
                     area: 'west',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.520021, lng: -0.191735 },
                     content: '<h3>Royal Oak Skatepark</h3>',
-                    name: 'royal oak skatepark',
+                    names: ['royal oak skatepark', 'royal oak'],
                     area: 'west',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.517470, lng: -0.031643 },
                     content: '<h3>Mile End Skatepark</h3>',
-                    name: 'mile end skatepark',
+                    names: ['mile end skatepark', 'mile end'],
                     area: 'east',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.527929, lng: -0.131549 },
                     content: '<h3>Euston Bank</h3>',
-                    name: 'euston bank',
+                    names: ['euston bank', 'euston'],
                     area: 'central',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.527299, lng: -0.132221 },
                     content: '<h3>Euston Brick Banks</h3>',
-                    name: 'euston brick banks',
+                    names: ['euston brick banks', 'euston'],
                     area: 'central',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.425754, lng: -0.093675 },
                     content: '<h3>Bloblands Skatepark</h3>',
-                    name: 'bloblands skatepark',
+                    names: ['bloblands skatepark', 'bloblands'],
                     area: 'south',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.455733, lng: -0.190459 },
                     content: '<h3>Kimber Skatepark</h3>',
-                    name: 'kimber skatepark',
+                    names: ['kimber skatepark', 'kimber'],
                     area: 'south',
                     type: 'park'
                 },
@@ -404,244 +429,274 @@
                     coordinates: { lat: 51.562268, lng: -0.085033 },
                     content: '<h3>Clissold Park Skatepark</h3>',
                     name: 'clissold park skatepark',
+                    names: ['clissold park skatepark', 'clissold park'],
                     area: 'north',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.567501, lng: -0.104705 },
                     content: '<h3>Finsbury Park Skatepark</h3>',
-                    name: 'finsbury park skatepark',
+                    names: ['finsbury park skatepark', 'finsbury park'],
                     area: 'north',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.510540, lng: -0.000417 },
                     content: '<h3>Zebra Ledge</h3>',
-                    name: 'zebra ledge',
+                    names: ['zebra ledge'],
                     area: 'east',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.510503, lng: -0.003151 },
                     content: '<h3> East India Ledges</h3>',
-                    name: 'east india ledges',
+                    names: ['east india ledges', 'east india'],
                     area: 'east',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.508031, lng: -0.008035 },
                     content: '<h3>Black Wall Banks</h3>',
-                    name: 'black wall banks',
+                    names: ['black wall banks'],
                     area: 'east',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.490129, lng: -0.022728 },
                     content: '<h3>Mudchute Skatepark</h3>',
-                    name: 'mudchute skatepark',
+                    names: ['mudchute skatepark', 'mudchute'],
                     area: 'east',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.452072, lng: -0.113728 },
                     content: '<h3>Brixton Pink Hubba</h3>',
-                    name: 'brixton pink hubba',
+                    names: ['brixton pink hubba', 'brixton'],
                     area: 'south',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.485617, lng: -0.108536 },
                     content: '<h3>Kennington Bowl</h3>',
-                    name: 'kennington bowl',
+                    names: ['kennington bowl', 'kennington'],
                     area: 'south',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.421163, lng: -0.071196 },
                     content: '<h3>118 Banks</h3>',
-                    name: '118 banks',
+                    names: ['118 banks'],
                     area: 'south',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.552764, lng: -0.036070 },
                     content: '<h3>Hackney Bumps</h3>',
-                    name: 'hackney bumps',
+                    names: ['hackney bumps', 'hackney'],
                     area: 'east',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.552764, lng: -0.036070 },
                     content: '<h3>Hackney Playground</h3>',
-                    name: 'hackney playground',
+                    names: ['hackney playground', 'hackney'],
                     area: 'east',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.538216, lng: -0.060315 },
                     content: '<h3>London Fields</h3>',
-                    name: 'london fields',
+                    names: ['london fields'],
                     area: 'east',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.487672, lng: 0.025399 },
                     content: '<h3>Bank to Ledge</h3>',
-                    name: 'bank to ledge',
+                    names: ['bank to ledge'],
                     area: 'east',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.517269, lng: -0.070746 },
                     content: '<h3>Brick Lane Manual Pad</h3>',
-                    name: 'brick lane manual pad',
+                    names: ['brick lane manual pad', 'brick lane'],
                     area: 'east',
                     type: 'street'
                 },
                 {
                     coordinates: { lat: 51.539387, lng: -0.439413 },
                     content: '<h3>Pole Hill Skatepark</h3>',
-                    name: 'pole hill skatepark',
+                    names: ['pole hill skatepark', 'pole hill'],
                     area: 'west',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.460609, lng: -0.428272 },
                     content: '<h3>Bedfont Skatepark</h3>',
-                    name: 'bedfont skatepark',
+                    names: ['bedfont skatepark', 'bedfont'],
                     area: 'west',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.471134, lng: -0.217669 },
                     content: '<h3>Bishops Park Bowl</h3>',
-                    name: 'bishops park bowl',
+                    names: ['bishops park bowl', 'bishops park'],
                     area: 'west',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.546225, lng: -0.270894 },
                     content: '<h3>Harrow Skatepark</h3>',
-                    name: 'harrow skatepark',
+                    names: ['harrow skatepark', 'harrow'],
                     area: 'west',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.574166, lng: 0.105215 },
                     content: '<h3>Newbury Skatepark</h3>',
-                    name: 'newbury skatepark',
+                    names: ['newbury skatepark', 'newbury'],
                     area: 'east',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.533537, lng: 0.121775 },
                     content: '<h3>Castle Green Skatepark</h3>',
-                    name: 'castle green skatepark',
+                    names: ['castle green skatepark', 'castle green'],
                     area: 'east',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.557664, lng: 0.188379 },
                     content: '<h3>Romford Skatepark</h3>',
-                    name: 'romford skatepark',
+                    names: ['romford skatepark', 'romford'],
                     area: 'east',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.603745, lng: 0.114585 },
                     content: '<h3>Hainault Skatepark</h3>',
-                    name: 'hainault skatepark',
+                    names: ['hainault skatepark', 'hainault'],
                     area: 'east',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.558002, lng: 0.015166 },
                     content: '<h3>Leytonstone Skatepark</h3>',
-                    name: 'leytonstone skatepark',
+                    names: ['leytonstone skatepark', 'leytonstone'],
                     area: 'east',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.594771, lng: -0.021089 },
                     content: '<h3>Walthamstow Skatepark</h3>',
-                    name: 'walthamstow skatepark',
+                    names: ['walthamstow skatepark', 'walthamstow'],
                     area: 'east',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.594771, lng: -0.021089 },
                     content: '<h3>Tottenham Skatepark</h3>',
-                    name: 'tottenham skatepark',
+                    names: ['tottenham skatepark', 'tottenham'],
                     area: 'north',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.595626, lng: -0.130839 },
                     content: '<h3>Alexandra Palace Skatepark</h3>',
-                    name: 'alexandra palace skatepark',
+                    names: ['alexandra palace skatepark', 'alexandra palace'],
                     area: 'north',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.618751, lng: -0.162821 },
                     content: '<h3>Friary Park Skatepark</h3>',
-                    name: 'friary skatepark',
+                    names: ['friary skatepark', 'friary'],
                     area: 'north',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.702304, lng: -0.206276 },
                     content: '<h3>Potters Bar Skatepark</h3>',
-                    name: 'potters bar skatepark',
+                    names: ['potters bar skatepark', 'potters bar'],
                     area: 'north',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.441589, lng: -0.090383 },
-                    content: '<h3>belair skatepark</h3>',
-                    name: 'Belair Skatepark',
+                    content: '<h3>Belair skatepark</h3>',
+                    names: ['Belair Skatepark', 'belair'],
                     area: 'south',
                     type: 'park'
                 },
                 {
                     coordinates: { lat: 51.402569, lng: -0.132355 },
                     content: '<h3>Pollards Hill Skatepark</h3>',
-                    name: 'pollards hill skatepark',
+                    names: ['pollards hill skatepark', 'pollards hill'],
                     area: 'south',
                     type: 'park'
+                },
+                {
+                    coordinates: { lat: 51.418300, lng: -0.419519 },
+                    content: '<h3>Sunbury Skatepark</h3>',
+                    names: ['sunbury skatepark', 'sunbury'],
+                    area: 'west',
+                    type: 'park'
+                },
+                {
+                    coordinates: { lat: 51.411454, lng: -0.307887 },
+                    content: '<h3>John Lewis 3</h3>',
+                    names: ['john lewis 3', 'kingston'],
+                    area: 'west',
+                    type: 'street'
+                },
+                {
+                    coordinates: { lat: 51.460159, lng: -0.301515 },
+                    content: '<h3>Richmond Quarter-Pipe</h3>',
+                    names: ['richmond quarter-pipe', 'richmond quarter'],
+                    area: 'west',
+                    type: 'street'
+                },
+                {
+                    coordinates: { lat: 51.561757, lng: -0.130333 },
+                    content: '<h3>Whittington Park Skatepark</h3>',
+                    names: ['whittington park skatepark', 'whittington park'],
+                    area: 'north',
+                    type: 'park'
+                },
+                {
+                    coordinates: { lat: 51.605266, lng: -0.212087 },
+                    content: '<h3>Mill Hill Bank</h3>',
+                    names: ['mill hill bank', 'mill hill'],
+                    area: 'north',
+                    type: 'street'
+                },
+                {
+                    coordinates: { lat: 51.614788, lng: -0.254969 },
+                    content: '<h3>Edgware Rail</h3>',
+                    names: ['edgware rail', 'edgware'],
+                    area: 'north',
+                    type: 'street'
+                },
+                {
+                    coordinates: { lat: 51.576453, lng: -0.220650 },
+                    content: '<h3>Brent Cross Ledge</h3>',
+                    names: ['brent cross ledge', 'brent cross'],
+                    area: 'north',
+                    type: 'street'
+                },
+                {
+                    coordinates: { lat: 51.585107, lng: -0.281866 },
+                    content: '<h3>Kingsbury stairs</h3>',
+                    names: ['kingsbury stairs', 'kingsbury'],
+                    area: 'north',
+                    type: 'street'
                 }
             ];
-
-            // Loop through marker objects and create markers----------------------------
-            for (var i = 0; i < markers.length; i++) {
-                // Add marker
-                newMarker(markers[i]);
-            }
-
-        };
-
-
-
-
-
-        // var ben = [
-        //     {
-        //         number: 1,
-        //         bean: 'baked'
-        //     },
-        //     {
-        //         number: 2,
-        //         bean: 'green'
-        //     },
-        //     {
-        //         number: 3,
-        //         bean: 'runner'
-        //     }
-        // ];
+        }
     </script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnV3AvoV2TzniuDgTc3Qx5zJqEYTgSIAE&callback=initMap" type="text/javascript"></script>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
