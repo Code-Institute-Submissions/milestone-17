@@ -140,7 +140,7 @@
 
                 for (var i = 0; i < mapMarkers.length; i++) {
                     var marker = mapMarkers[i];
-                    if (marker.names && marker.names.find(function(name) { return name === spotName; })) {
+                     if (marker.names && marker.names.find(function(name) { return name === spotName; })) {
                         marker.setMap(map);
                         isSpotFound = true;
                     }

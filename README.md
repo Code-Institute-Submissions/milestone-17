@@ -1,9 +1,9 @@
 # London Skate-Spot Finder
 
-Interactive Frontend Development Milestone Project.
+Interactive Front End Development Milestone Project.
 
 This website is basically an interactive digital pocket guide to all the best skateparks and spots in London. It has the exact locations of more than 20 street spots and over 30 skateparks. This is perfect for skateboarders of all levels of ability.
-From looking up where your local park is when you start skating, to the explorers trying to find that secret ledge that you've only seen in videos theres a use case for every skater.
+From looking up where your local park is when you start skating, to the explorers trying to find that secret ledge that you've only seen in videos there's a use case for every skater.
 
 
 ## UX
@@ -43,7 +43,7 @@ The font sizes have been set to the biggest and most legible they can without sa
 The Map is generated using the Google Maps API, it gives the user an impeccable experience in scrolling around the map
 as well as having plenty of landmark information amongst the array of spot markers. I have buttons that work as a navigation point to filter spots by location (North, East, South, West and Central) and type (Skatepark or Street Spot).
 
-There is a search bar at the bottom of the site that lets you search for the spot by name, and will filter to just your chosen spot on a click of a sumit button or 'Enter' keypress. 
+There is a search bar at the bottom of the site that lets you search for the spot by name, and will filter to just your chosen spot on a click of a submit button or 'Enter' keypress. 
 
 ### Features Left to Implement
 
@@ -70,7 +70,7 @@ I gave the anchor-tag an
 
 When first building the web-app I had the Nav Buttons (location filters) at the top of the screen, 
 adhering to established design techniques. This gave me a few problems. Firstly when using the map you had to 
-scroll all the way up past the title and logo everytime you wanted to filter the spots. This made for a bad user experience.
+scroll all the way up past the title and logo every time you wanted to filter the spots. This made for a bad user experience.
 I made the nav bar sticky so that you wouldn't need to scroll all the way up but it looked horrible when it scrolled over the title and logo.
 Moving it down still looked professional and familiar while sacrificing none of the design or UX. 
 
@@ -78,71 +78,54 @@ Another reason for moving the nav down below the title was that it aided in maki
 I was using a lot of media queries to make the site look good and still be easy to use. The site now works with 
 very few media queries, looks good, feels good and all the text is extremely legible for any user.
 
+While testing my app I came across a problem when you entered a spot name in the text-input that did not exist.
+The map would wipe all markers off the map leaving the user confused. In the case of a typo I wanted all the markers to display.
+The problem was that all of my event handlers were inside of the function that was being called for 'markers.length' (the total number of markers).
+This made me realise that despite everything looking good there was something seriously wrong going on in the Javascript.
+I had functions within functions that shouldn't have been there and moving them out messed up the scope of most of the variables.
 
-.
+This is when I underwent the massive task of refactoring the whole of my Javascript code. I started by defining all my global variables
+and laying out what steps I wanted the site to take as it loaded. I placed my pieces of code within functions so everything was clear and separate.
+I call these functions inside the initMap() function which is called straight away. The adding of event handlers is only being called once now. 
 
-.
-.
-
-.
-
-.
-
- .  
-When I started this project I got about halfway through before I realised I hadn't made it truly responsive. 
-After writing a silly number of media queries in some attempt to serve all screen sizes with some bad code 
-I decided to start again with a new, responsive foundation on which everything would work properly. 
-Now the site looks good across all screen sizes including mobile, tablet, desktop and landscape-mobile.
-
-When clicking the portfolio section of the NAV, as the page dropped to the portfolio section, 
-the nav bar would to cover the 'Portfolio' heading. Now if you click it, 
-it should transport you a few pixels above the heading.
-
-If you don't enter required information in the contact form, 
-it will not submit. An error message will display. 
-This will also occur if an invalid email address is submitted. 
-If all information is valid, the page will reload.
-
-The 'About'/'Portfolio' section was made to take up as much space as the content requires to let the text and carousel respond to the screen size. Using the mobile simulator on Chrome Dev Tools you can see this working. The carousel controls have been tested to make sure they scroll properly on all devices.
-
-The site works across many browsers including: Chrome, Firefox, Safari and Edge. The site works across ALL mobile sizes. I had a terrible moment when I thought I had finished only to find that the site doesn't work on a on a mobile in landscape mode. Landscape now works perfectly on all mobiles.
-
-The social media buttons are not currently linked to anywhere so they will load the page again in a new tab. They will (when social media is set up) link to the 'TGC' profile of the relevent social media sites in a new tab.
-
-I had a button with a call to action on the landing page but the icon in the button was not available on some mobiles. I have removed the button until this gets sorted. 
-
-I was having some trouble with the sizing of the landing-page's content and carousel on iPad size screens so I have set up precision media queries on those sizes re-sizing the elements.
+To fix the typo error I had to make a clear difference between the Google Maps markers that are rendered and the information that they
+take to determine their position, name, content, type etc. First I made an empty array called mapMarkers which is where I wanted my selected Google Maps markers to be pushed to.
+I put the array of markerData inside a function that returned the array, this allowed me to make a newMarker
+by looping through the 'markerData' array, calling createMarker(markerData[i]) and pushing the newMarker to the empty mapMarker array to be rendered. 
+If the text input does not match any of the markerData 'isSpotFound' is false, this selects all markers to be shown.
 
 I ran the CSS and HTML through the W3C Jigsaw validator with no errors found.
 
+The site works across many browsers including: Chrome, Firefox, Safari and Edge.
 
 
 ## Deployment
 
-I am hosting the site on GitHub pages on the master branch. I had a already commited to GitHub a few times before I actually put code on GitHub Pages. To do this I went into the settings tab in my GitHub repository and scrolled down to the GitHub Pages section, selected "master branch" as the source, and clicked 'Save'. This created the link to where my code is being published: "https://harrypars0ns.github.io/milestone-project/".  
+I am hosting the site on GitHub pages on the master branch. I had a already commited to GitHub a few times before 
+I actually put code on GitHub Pages. To do this I went into the settings tab in my GitHub repository and scrolled 
+down to the GitHub Pages section, selected "master branch" as the source, and clicked 'Save'. 
+This created the link to where my code is being published: "https://harrypars0ns.github.io/milestone-2/".  
 
-If you want to run the code locally you can use 'git clone'. Alternatively you can download all the files in a .zip file and open 'index.html' in your browser of choice.
+If you want to run the code locally you can use 'git clone'. Alternatively you 
+can download all the files in a .zip file and open 'index.html' in your browser of choice.
 
 
 ## Credits
 
 ### Content
 
-I built the Nav-bar and form from scratch. Content from the "About us" section was written by me. 
+I built the Nav buttons from scratch. The text input was built from scratch. All HTML, CSS and javascript was written by me. 
+The map and markers are generated by the Google Maps Javascript API. 
 
 
 ### Media
-I used Pexels (stock images) for all my images, because people upload a whole photo shoot I could get a selection.
-I cropped the images in the carousel so they were all the same size. I also darkened some images that needed higher contrast with the light text.
-
+I used Pexels (stock images) for my image, I only needed one icon.
 
 ### Acknowledgements
 
-- The Carousel is a bootstrap component. I added more spots for images in the carousel so that I could have more examples of our work. (https://getbootstrap.com/docs/4.4/components/carousel/)
-
 - I used the Bootstrap grid for responsive placement. (https://getbootstrap.com/docs/4.4/layout/grid/)
 
-- The social media icons were made by font awesome. (https://fontawesome.com/) 
+- The map and markers are generated by the Google Maps Javascript API. (https://developers.google.com/maps/documentation/javascript/tutorial)
 
  
 
