@@ -2,6 +2,9 @@
 
 Interactive Front End Development Milestone Project.
 
+As a Skater I always found finding skate spots an annoying task, you either go out and look for them yourself or wait for another skater to take you.
+I always wanted a simple site I could go to online to see all parks and spots in London.
+
 This website is basically an interactive digital pocket guide to all the best skateparks and spots in London. It has the exact locations of more than 20 street spots and over 30 skateparks. This is perfect for skateboarders of all levels of ability.
 From looking up where your local park is when you start skating, to the explorers trying to find that secret ledge that you've only seen in videos there's a use case for every skater.
 
@@ -24,12 +27,9 @@ those who aren't comfortable using complex websites and the elderly (even if som
 Whether you are a pro-skater, rookie or a parent looking for somewhere to take a child the London Skate-Spot Finder will give you no problems in your user experience.
 
 ### Skeleton
-NOT OKAY
-[Landing Page wireframe]  (https://github.com/harrypars0ns/milestone-project/blob/master/wireframes/landing-wireframe.jpg)
-NOT OKAY
-[About Page + Portfolio wireframe]  (https://github.com/harrypars0ns/milestone-project/blob/master/wireframes/about-portfolio-wireframe.jpg)
-NOTOKAY
-[Contact Page wireframe]  (https://github.com/harrypars0ns/milestone-project/blob/master/wireframes/contact-wireframe.jpg)
+[Wireframe plan 1]  (https://github.com/harrypars0ns/milestone-2/blob/master/wireframes/LSSFwireframe.png)
+
+[Wireframe plan 2]  (https://github.com/harrypars0ns/milestone-2/blob/master/wireframes/LSSFwireframe2.png)
 
 ### Surface
  
@@ -51,6 +51,9 @@ There is a search bar at the bottom of the site that lets you search for the spo
 
 - Another great feature would be to add a direction/journey planner to show what public transport people can use to get to a spot from their GPS location.
 
+- I would like to add more information such as address, difficulty, pictures and maybe links to YouTube videos for each spot in the info window.
+
+- A weather layer for the map would be a useful feature controlled with a toggle button in the Nav.
 
 ## Technologies Used
 
@@ -65,8 +68,8 @@ There is a search bar at the bottom of the site that lets you search for the spo
 
 ## Testing
  
-When clicking the buttons the site would jump back to the top of the page almost looking like it was refreshing
-I gave the anchor-tag an 
+When clicking the buttons the site would jump back to the top of the page almost looking like it was refreshing.
+I gave the anchor-tag an href of its own ID so the screen will not move while clicking the buttons.
 
 When first building the web-app I had the Nav Buttons (location filters) at the top of the screen, 
 adhering to established design techniques. This gave me a few problems. Firstly when using the map you had to 
@@ -94,7 +97,7 @@ I put the array of markerData inside a function that returned the array, this al
 by looping through the 'markerData' array, calling createMarker(markerData[i]) and pushing the newMarker to the empty mapMarker array to be rendered. 
 If the text input does not match any of the markerData 'isSpotFound' is false, this selects all markers to be shown.
 
-I ran the CSS and HTML through the W3C Jigsaw validator with no errors found.
+I ran the CSS and HTML through the W3C Jigsaw validator with no errors found. The Javascript was run through the JSHint validator with no major issues.
 
 The site works across many browsers including: Chrome, Firefox, Safari and Edge.
 

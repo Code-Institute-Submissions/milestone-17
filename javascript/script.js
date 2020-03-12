@@ -6,7 +6,7 @@
         var infoWindow;
         var mapMarkers = [];
 
-        function initMap() { // called by Google map and runs on startup
+        function initMap() { // called by Google map and runs on startup. A plan of how I want my site to load
             // define map
             defineMap();
 
@@ -29,7 +29,7 @@
             mapOptions = {
                 center: new google.maps.LatLng(51.508034, -0.126798),
                 zoom: 11
-            }
+            };
 
             // New Map
             map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -39,31 +39,31 @@
         }
 
 
-        function addMarkers(markerData) {
+        function addMarkers(markerDataList) {
             // Loop through marker objects and create markers----------------------------
-            for (var i = 0; i < markerData.length; i++) {
-                var newMarker = createMarker(markerData[i]);
+            for (var i = 0; i < markerDataList.length; i++) {
+                var newMarker = createMarker(markerDataList[i]);
                 mapMarkers.push(newMarker);
             }
         }
 
 
         // Create Marker---------------------------------------------
-        function createMarker(markerData) {
+        function createMarker(markerDataItem) {
             var marker = new google.maps.Marker({
                 map: map,
-                position: markerData.coordinates,
-                area: markerData.area,
-                type: markerData.type,
-                names: markerData.names
+                position: markerDataItem.coordinates,
+                area: markerDataItem.area,
+                type: markerDataItem.type,
+                names: markerDataItem.names
             });
 
             // Spot Name Set & Open Info Window ClickEvent-----------------------------------------------
 
-            if (markerData.content) {
+            if (markerDataItem.content) {
                 marker.addListener('click', function() {
                     infoWindow.open(map, marker);
-                    infoWindow.setContent(markerData.content);
+                    infoWindow.setContent(markerDataItem.content);
                 });
             }
 
@@ -73,14 +73,14 @@
 
         function addEventHandlers() {
             // Buttons---------------------------------------------------
-            document.getElementById("central").addEventListener("click", function() { selectByArea('central') });
-            document.getElementById("north").addEventListener("click", function() { selectByArea('north') });
-            document.getElementById("east").addEventListener("click", function() { selectByArea('east') });
-            document.getElementById("south").addEventListener("click", function() { selectByArea('south') });
-            document.getElementById("west").addEventListener("click", function() { selectByArea('west') });
-            document.getElementById("reset").addEventListener("click", function() { selectAllMarkers() });
-            document.getElementById("park").addEventListener("click", function() { selectByType('park') });
-            document.getElementById("street").addEventListener("click", function() { selectByType('street') });
+            document.getElementById("central").addEventListener("click", function() { selectByArea('central'); });
+            document.getElementById("north").addEventListener("click", function() { selectByArea('north'); });
+            document.getElementById("east").addEventListener("click", function() { selectByArea('east'); });
+            document.getElementById("south").addEventListener("click", function() { selectByArea('south'); });
+            document.getElementById("west").addEventListener("click", function() { selectByArea('west'); });
+            document.getElementById("reset").addEventListener("click", function() { selectAllMarkers(); });
+            document.getElementById("park").addEventListener("click", function() { selectByType('park'); });
+            document.getElementById("street").addEventListener("click", function() { selectByType('street'); });
         }
 
         function selectAllMarkers() {
@@ -126,7 +126,7 @@
             document.getElementById("resetForm").addEventListener("click", selectAllMarkers);
         }
 
-
+        // Submit function
         function onSubmit() {
 
             var spotName = document.getElementById("spot").value;
@@ -152,7 +152,7 @@
                 if (!isSpotFound) {
                     selectAllMarkers();
                 }
-            };
+            }
         }
 
         function defineMarkerData() {
